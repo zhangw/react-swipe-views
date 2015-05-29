@@ -1,0 +1,52 @@
+#carouselDiv>.mask {
+  position: absolute;
+  bottom: 0px;
+  background-color: rgba(0,0,0,.5);
+  width: 100%;
+}
+
+#carouselDiv>.mask h3,#carouselDiv>.mask p{
+  padding: 0 30px;
+}
+
+#carouselDiv>.mask h3{
+  color: white;
+  /*TODO:ellipsis*/
+}
+
+#carouselDiv>.mask p{
+  color: #ff9999;
+  font-size: x-large;
+}
+
+#carouselDiv .slideImage{
+  min-height: 275px;
+  background-position: center center;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+
+#carouselDiv>.indicator{
+  position: absolute;
+  right: 30px;
+  bottom: 0px;
+  z-index: 10;
+  list-style: none;
+}
+
+#carouselDiv>.indicator li{
+  background-color: #ccc;
+  border: 1px solid #ccc;
+  margin-left: 10px;
+  border-radius: 10px;
+  opacity: 0.5;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+}
+
+#carouselDiv>.indicator li.active{
+  background-color: #fff;
+  border:none;
+  opacity: 1;
+}

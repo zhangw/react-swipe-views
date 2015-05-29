@@ -1,0 +1,24 @@
+.content {
+  padding:0 30px;
+}
+.content-img img{
+  width:100%;
+}
+.content-img {
+  margin-bottom: 10px;
+}
+.content-text, .content-title {
+  font-size:16px;
+  line-height:24px;
+  text-align:justify;
+}
+.content-text {
+  padding:5px 0px;
+  color:#666;
+}
+.content-title {
+  background-color: #31BEB3;
+  color:#efffff;
+  padding:5px 0px 5px 5px;
+  border-radius:5px;
+}

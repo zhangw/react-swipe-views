@@ -1,0 +1,30 @@
+.header,.footer,.wrap-page{
+  position:absolute;
+  left:0;
+  right:0;
+  background-color: #fff;
+}
+.header{
+  top:0;
+}
+.footer{
+  bottom:0;
+}
+.wrap-page{
+  bottom: 0px;
+  overflow: hidden;
+  z-index: 10000;
+  /*
+  -webkit-transition: top 150ms cubic-bezier(0.42, 0, 0.58, 1);
+  transition: top 150ms cubic-bezier(0.42, 0, 0.58, 1);
+  */
+}
+.hide-header{
+  top: 0px;
+}
+.show-header{
+  top: 275px;
+}
+#contentWrapper{
+  position:absolute;
+}

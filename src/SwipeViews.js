@@ -15,8 +15,13 @@ export default class SwipeViews extends React.Component {
       translation,
       clientX: null,
       animate: true,
-      pageWidth: window.innerWidth
+      pageWidth: window.innerWidth,
+      scrollTop: true
     };
+  }
+
+  componentDidUpdate() {
+    this.props.componentDidUpdate(this);
   }
 
   componentDidMount() {
@@ -31,56 +36,39 @@ export default class SwipeViews extends React.Component {
     const swipeViewsInkStyle = {
       width: this.state.pageWidthPerCent + '%',
       marginLeft: this.state.translation + '%',
-      transitionProperty: this.state.animate ? 'all' : 'none'
+      transitionProperty: this.state.animate ? 'margin' : 'none'
     };
-    const swipeViewsStyle = {
-      transform: 'translateX(-' + this.state.translation + '%)',
-      WebkitTransform: 'translateX(-' + this.state.translation + '%)',
-      transitionProperty: this.state.animate ? 'all' : 'none',
-      WebkitTransitionProperty: this.state.animate ? 'all' : 'none',
-      width: this.props.children.length * 100 + '%'
-    };
-
     return (
-      <div className="SwipeViewsContainer">
-        <header className="SwipeViewsHeader">
-          <div className="SwipeViewsTabs">
-            <ul>
-              {this.props.children.map((child, index) => {
-                let className = (index === this.state.selectedIndex ? 'active' : '');
-                return (
-                  <li
-                    key={index}
-                    className={'SwipeViewsTab ' + className}
-                    onClick={this._handleClick.bind(this, index)}
-                  >
-                    {child.props.title}
-                  </li>
-                );
-              })}
-            </ul>
-            <div className="SwipeViewsInk" style={swipeViewsInkStyle} />
-          </div>
-        </header>
-        <div
-          className="SwipeViews"
-          style={swipeViewsStyle}
-          onTouchMove={this._handleTouchMove.bind(this)}
-          onTouchEnd={this._handleTouchEnd.bind(this)}
-        >
-          {this.props.children.map((child, index) => {
-            return (
-              <div
-                className="SwipeView"
-                key={index}
+      <div>
+      <section className="SwipeViewsHeaderContainer">
+        <div className="SwipeViewsHeader">
+          <ul className="SwipeViewsTabs">
+            {this.props.children.map((child,index) => {
+              let className = (index === this.state.selectedIndex ? 'active' : '');
+              return (
+                <li key={index} 
+                className={'SwipeViewsTab '+className}
                 style={{width: this.state.pageWidthPerCent + '%'}}
-                onScroll={this._handleScroll.bind(this)}
-              >
-                {child.props.children}
-              </div>
-            );
-          })}
+                onTouchEnd={this._handleClick.bind(this, index)}>
+                {child.props.title}
+                </li>
+              );
+            })}
+          </ul>
         </div>
+        <div className="SwipeViewsInk" style={swipeViewsInkStyle}></div>
+      </section>
+      {this.props.children.map((child, index) => {
+          let className = (index === this.state.selectedIndex ? 'SwipeViewPage-active SwipeViewPage-in' : 'SwipeViewPage-next SwipeViewPage-out');
+          return (
+            <section className={'SwipeViewPage ' + className}
+            key={index}
+            onScroll={this._handleScroll.bind(this)}
+            >
+              {child.props.children}
+            </section> 
+          ); 
+      })}
       </div>
     );
   }
@@ -187,15 +175,8 @@ export default class SwipeViews extends React.Component {
     }, this._transitionTo(selectedIndex));
   }
 
-  _handleScroll() {
-    const selectedIndex = this.state.selectedIndex;
-    const translation = selectedIndex * this.state.pageWidthPerCent;
-    this.setState({
-      selectedIndex,
-      translation,
-      clientX: null,
-      animate: true
-    });
+  _handleScroll(event) {
+    this.props.viewsOnScroll(event,this);
   }
 
 }

@@ -1,16 +1,11 @@
 # React Swipe Views
 
-A React component for binded Tabs and Swipeable Views
-
-See [Swipe Views](http://developer.android.com/design/patterns/swipe-views.html) on the Android Design Patterns website for inspiration.
-
-Works with [React Router](https://github.com/rackt/react-router), as a pure component or as a standalone component.
+Forked from [React-swipe-views](https://github.com/damusnet/react-swipe-views), the original project use 'display:flex' as the way of layout which not compatible with QQ-X5 browser engine used in MicroMessenger of Android mobile.So I created the 'withoutFlexLayout' branch in which a compatible way of implementing the React component for binded Tabs and Swipeable Views.
 
 ## Demo
 
-[Live example](http://damusnet.github.io/react-swipe-views/)
+[Live example]()
 
-![Demo](docs/demo.gif)
 
 ## Quick Example
 
@@ -60,18 +55,16 @@ For Safari compatibility, you need to include the Babel Polyfill for `Number.isI
 There are two example projects in the [/examples](examples) folder. One is using the npm module and webpack as a build tool with react-router, the other uses bower and brunch as a pure component.
 
 ## TODO List
+ - add onscroll event handler (当前的Tab页滚动到底部时，切换到下一个Tab页)
+ - add touchmove event handler (左右滑动时，切换Tab页)
 
-- Allow for content to be inserted in the header
-- Write tests
+## New Features
+ - add onscroll event callback interface 
+ - add componentDidUpdate callback interface
+ - implement the basic layout compatible with QQ-X5 and the engine based webkit, such as safari or chrome.
+ - add new example only with the static files (css/js/html), view simple-example for more details.
 
 ## Thanks
-
-- [David Bruant](https://twitter.com/davidbruant) for making me believe in JavaScript
-- [React](http://facebook.github.io/react/) for being awesome
-- [Babel](http://babeljs.io/) for removing so much pain from transpiling/compiling/bundling
-- [Dan Abramov](https://github.com/gaearon) for all the useful ressources, in this case [React Hot Boilerplate](https://github.com/gaearon/react-hot-boilerplate)
-- [Hassan Hayat](https://github.com/TheSeamau5)'s [Swipe Pages WebComponent](https://github.com/TheSeamau5/swipe-pages) for inspiration
-- [Ferran Negre](https://github.com/ferrannp) for helping me debug
 
 ## License
 
