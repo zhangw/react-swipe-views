@@ -14,7 +14,8 @@
     "build:umd": "babel ./src/SwipeViews.js --modules umd -o ./lib/react-swipe-views.js -v",
     "build:css": "autoprefixer ./src/SwipeViews.css -o ./lib/react-swipe-views.css && npm run min:css",
     "min:js": "uglifyjs ./lib/react-swipe-views.js -o ./lib/react-swipe-views.min.js",
-    "min:css": "cleancss ./lib/react-swipe-views.css -o ./lib/react-swipe-views.min.css"
+    "min:css": "cleancss ./lib/react-swipe-views.css -o ./lib/react-swipe-views.min.css",
+    "mybuild": "npm run build && cp ./lib/react-swipe-views.js ~/Codes/uYachter.singlepage.demo/js/libs/SwipeViews.js && cp ./lib/react-swipe-views.css ~/Codes/uYachter.singlepage.demo/css/SwipeViews.css"
   },
   "repository": {
     "type": "git",

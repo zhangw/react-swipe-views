@@ -55,8 +55,8 @@ For Safari compatibility, you need to include the Babel Polyfill for `Number.isI
 There are two example projects in the [/examples](examples) folder. One is using the npm module and webpack as a build tool with react-router, the other uses bower and brunch as a pure component.
 
 ## TODO List
- - add onscroll event handler (当前的Tab页滚动到底部时，切换到下一个Tab页)
- - add touchmove event handler (左右滑动时，切换Tab页)
+ - [ ] add onscroll event handler (当前的Tab页滚动到底部时，切换到下一个Tab页)
+ - [x] add touchmove/start event handler (左右滑动时，切换Tab页)
 
 ## New Features
  - add onscroll event callback interface 

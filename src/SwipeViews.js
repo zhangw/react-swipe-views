@@ -7,13 +7,16 @@ export default class SwipeViews extends React.Component {
   constructor(props) {
     super(props);
     const selectedIndex = this.props.selectedIndex || 0;
+    //the width percent value of each SwipeTab
     const pageWidthPerCent = 100 / this.props.children.length;
+    //the margin-left percent value of each SwipeTab
     const translation = selectedIndex * pageWidthPerCent;
     this.state = {
       selectedIndex,
       pageWidthPerCent,
       translation,
       clientX: null,
+      clientY: null,
       animate: true,
       pageWidth: window.innerWidth,
       scrollTop: true
@@ -64,6 +67,8 @@ export default class SwipeViews extends React.Component {
             <section className={'SwipeViewPage ' + className}
             key={index}
             onScroll={this._handleScroll.bind(this)}
+            onTouchStart={this._handleTouchStart.bind(this)}
+            onTouchMove={this._handleTouchMove.bind(this)}
             >
               {child.props.children}
             </section> 
@@ -114,41 +119,54 @@ export default class SwipeViews extends React.Component {
       this.context.router.transitionTo(to);
     }
   }
+  
+  _handleTouchStart(event) {
+    const clientX = event.changedTouches[0].clientX;
+    const clientY = event.changedTouches[0].clientY;
+    this.state.clientX = clientX;
+    this.state.clientY = clientY;
+  }
 
   _handleTouchMove(event) {
     const clientX = event.changedTouches[0].clientX;
+    const clientY = event.changedTouches[0].clientY;
+    if (!this.state.clientX || !this.state.clientY){
+      return;
+    }
     const dx = (clientX - this.state.clientX);
-    const dxPerCent = dx / (this.state.pageWidth * this.props.children.length) * 100;
-    let translation = this.state.translation - dxPerCent;
-    const maxTranslation = this.state.pageWidthPerCent * (this.props.children.length - 1);
-    let selectedIndex = this.state.selectedIndex;
-    const previousTranslation = selectedIndex * this.state.pageWidthPerCent;
-    const tippingPoint = this.state.pageWidthPerCent * 0.3;
-
-    if (!this.state.clientX) {
-      return this.setState({
-        clientX
-      });
+    const dy = (clientY - this.state.clientY);
+    if (Math.abs(dx) > Math.abs(dy)){
+      const dxPerCent = dx / (this.state.pageWidth) * 100;
+      const tippingPoint = 30;
+      let selectedIndex = this.state.selectedIndex;
+      if (Math.abs(dx) > tippingPoint){
+        if (dxPerCent < 0 && selectedIndex >= 0){
+          selectedIndex += 1;
+          selectedIndex = selectedIndex > this.props.children.length-1 ? 0 : selectedIndex;
+        }else if (dxPerCent > 0 && selectedIndex < this.props.children.length){
+          selectedIndex -= 1;
+          selectedIndex = selectedIndex < 0 ? this.props.children.length-1 : selectedIndex;
+        }
+        const translation = selectedIndex * this.state.pageWidthPerCent;
+        if (selectedIndex !== this.state.selectedIndex){
+          return this.setState({
+            selectedIndex,
+            translation,
+            clientX:null,
+            clientY:null,
+            animate: true
+          });
+        }
+      }
+      else{
+        //less than tippingPoint ignored
+        return;
+      }
     }
-
-    if (translation < 0) {
-      translation = 0;
-    } else if (translation > maxTranslation) {
-      translation = maxTranslation;
+    else{
+      //swipe to up or down ignored
+      return;
     }
-
-    if (dx > 0 && translation < previousTranslation - tippingPoint) {
-      selectedIndex -= 1;
-    } else if (dx < 0 && translation > previousTranslation + tippingPoint) {
-      selectedIndex += 1;
-    }
-
-    this.setState({
-      selectedIndex,
-      translation,
-      clientX,
-      animate: false
-    });
   }
 
   _handleClick(selectedIndex, event) {
